@@ -9,9 +9,9 @@
   <title>XPNFORCE — Unified Business OS</title>
 
   <!-- PWA -->
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="icon" type="image/svg+xml" href="/assets/icons/logo.svg" />
-  <link rel="apple-touch-icon" href="/assets/icons/icon-192.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,7 +45,7 @@
   </script>
 
   <!-- Core CSS -->
-  <link rel="stylesheet" href="/css/app.css" />
+  <link rel="stylesheet" href="css/app.css" />
 </head>
 <body class="bg-space text-slate-light font-body antialiased overflow-hidden">
 
@@ -263,14 +263,14 @@
   </script>
 
   <!-- App Bootstrap -->
-  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
 <!-- Auto-appended by build: Service Worker registration -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('sw.js')
       .then(reg => console.log('[PWA] SW registered:', reg.scope))
       .catch(err => console.warn('[PWA] SW registration failed:', err));
   });

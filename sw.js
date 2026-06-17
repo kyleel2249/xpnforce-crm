@@ -1,43 +1,43 @@
 // /sw.js — XPNFORCE Service Worker
 const CACHE_NAME    = 'xpnforce-v1.0.0';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/css/app.css',
-  '/js/app.js',
-  '/js/utils/eventbus.js',
-  '/js/modules/auth.js',
-  '/js/modules/router.js',
-  '/js/modules/nav.js',
-  '/js/modules/datastore.js',
-  '/js/modules/ai-assistant.js',
-  '/js/modules/notifications.js',
-  '/js/modules/toast.js',
-  '/js/pages/_helpers.js',
-  '/js/pages/dashboard.js',
-  '/js/pages/contacts.js',
-  '/js/pages/companies.js',
-  '/js/pages/pipeline.js',
-  '/js/pages/support.js',
-  '/js/pages/campaigns.js',
-  '/js/pages/workflows.js',
-  '/js/pages/tasks.js',
-  '/js/pages/invoices.js',
-  '/js/pages/users.js',
-  '/js/pages/settings.js',
-  '/js/pages/ai-hub.js',
-  '/js/pages/activities.js',
-  '/js/pages/segments.js',
-  '/js/pages/journeys.js',
-  '/js/pages/live-chat.js',
-  '/js/pages/knowledge.js',
-  '/js/pages/forecasting.js',
-  '/js/pages/reports.js',
-  '/js/pages/integrations.js',
-  '/js/pages/team-chat.js',
-  '/js/pages/analytics.js',
-  '/manifest.json',
-  '/assets/icons/logo.svg',
+  './',
+  './index.html',
+  './css/app.css',
+  './js/app.js',
+  './js/utils/eventbus.js',
+  './js/modules/auth.js',
+  './js/modules/router.js',
+  './js/modules/nav.js',
+  './js/modules/datastore.js',
+  './js/modules/ai-assistant.js',
+  './js/modules/notifications.js',
+  './js/modules/toast.js',
+  './js/pages/_helpers.js',
+  './js/pages/dashboard.js',
+  './js/pages/contacts.js',
+  './js/pages/companies.js',
+  './js/pages/pipeline.js',
+  './js/pages/support.js',
+  './js/pages/campaigns.js',
+  './js/pages/workflows.js',
+  './js/pages/tasks.js',
+  './js/pages/invoices.js',
+  './js/pages/users.js',
+  './js/pages/settings.js',
+  './js/pages/ai-hub.js',
+  './js/pages/activities.js',
+  './js/pages/segments.js',
+  './js/pages/journeys.js',
+  './js/pages/live-chat.js',
+  './js/pages/knowledge.js',
+  './js/pages/forecasting.js',
+  './js/pages/reports.js',
+  './js/pages/integrations.js',
+  './js/pages/team-chat.js',
+  './js/pages/analytics.js',
+  './manifest.json',
+  './assets/icons/logo.svg',
 ];
 
 // ── Install ──────────────────────────────────────────────────────
@@ -89,16 +89,16 @@ self.addEventListener('fetch', event => {
           }
           return response;
         })
-        .catch(() => caches.match('/index.html'))
+        .catch(() => caches.match('./index.html'))
     );
     return;
   }
 
   // Cache-first for static assets (JS, CSS, fonts, icons)
   if (
-    url.pathname.startsWith('/js/') ||
-    url.pathname.startsWith('/css/') ||
-    url.pathname.startsWith('/assets/') ||
+    url.pathname.includes('/js/') ||
+    url.pathname.includes('/css/') ||
+    url.pathname.includes('/assets/') ||
     url.pathname.endsWith('.js') ||
     url.pathname.endsWith('.css') ||
     url.hostname.includes('fonts.googleapis') ||
@@ -129,7 +129,7 @@ self.addEventListener('fetch', event => {
         }
         return response;
       })
-      .catch(() => caches.match(request).then(r => r || caches.match('/index.html')))
+      .catch(() => caches.match(request).then(r => r || caches.match('./index.html')))
   );
 });
 
@@ -151,8 +151,8 @@ self.addEventListener('push', event => {
   event.waitUntil(
     self.registration.showNotification(data.title || 'XPNFORCE', {
       body: data.body || 'You have a new notification',
-      icon: '/assets/icons/icon-192.png',
-      badge: '/assets/icons/icon-72.png',
+      icon: 'assets/icons/icon-192.png',
+      badge: 'assets/icons/icon-72.png',
       data: data,
     })
   );
@@ -163,7 +163,7 @@ self.addEventListener('notificationclick', event => {
   event.waitUntil(
     clients.matchAll({ type: 'window' }).then(clientList => {
       if (clientList.length) return clientList[0].focus();
-      return clients.openWindow('/');
+      return clients.openWindow('./');
     })
   );
 });
