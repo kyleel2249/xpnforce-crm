@@ -1,0 +1,41 @@
+{
+  "name": "xpnforce",
+  "version": "1.0.0",
+  "description": "XPNFORCE — Unified AI-Powered CRM & Business Operating System",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve . -p 8080 --cors",
+    "dev:python": "python3 -m http.server 8080",
+    "deploy:firebase": "firebase deploy --only hosting",
+    "deploy:worker": "cd cloudflare && wrangler deploy",
+    "deploy:all": "npm run deploy:firebase && npm run deploy:worker",
+    "firebase:login": "firebase login",
+    "firebase:init": "firebase init",
+    "worker:secrets": "cd cloudflare && wrangler secret put ANTHROPIC_API_KEY",
+    "worker:dev": "cd cloudflare && wrangler dev",
+    "worker:kv:create": "cd cloudflare && wrangler kv:namespace create RATE_LIMIT_KV && wrangler kv:namespace create ANALYTICS_KV",
+    "lint": "echo 'Add eslint for production linting'",
+    "test": "echo 'Add vitest for production testing'"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.0.0",
+    "serve": "^14.2.0",
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "crm",
+    "saas",
+    "firebase",
+    "cloudflare",
+    "ai",
+    "enterprise"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect-generated",
+    "firebase": "^12.15.0"
+  }
+}

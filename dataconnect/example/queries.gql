@@ -1,0 +1,20 @@
+mutation CreateAccount($name: String!, $industry: String!) @auth(level: USER) {
+  account_insert(data: { name: $name, industry: $industry })
+}
+
+mutation AddContactToAccount($firstName: String!, $lastName: String!, $email: String!, $accountId: UUID!) @auth(level: USER) {
+  contact_insert(data: { firstName: $firstName, lastName: $lastName, email: $email, accountId: $accountId })
+}
+
+mutation CreateDeal($title: String!, $stage: String!, $value: Float!, $accountId: UUID!) @auth(level: USER) {
+  deal_insert(data: { title: $title, stage: $stage, value: $value, accountId: $accountId })
+}
+
+query ListContactsByAccount($accountId: UUID!) @auth(level: USER) {
+  contacts(where: { accountId: { eq: $accountId } }) {
+    firstName
+    lastName
+    email
+    jobTitle
+  }
+}

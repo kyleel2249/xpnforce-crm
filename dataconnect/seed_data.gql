@@ -1,0 +1,39 @@
+mutation SeedDatabase @transaction {
+  account_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      name: "Acme Corp",
+      industry: "Technology"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Global Logistics",
+      industry: "Logistics"
+    }
+  ])
+  contact_insertMany(data: [
+    {
+      id: "670e8400-e29b-41d4-a716-446655440000",
+      firstName: "Jane",
+      lastName: "Doe",
+      email: "jane.doe@acme.com",
+      accountId: "550e8400-e29b-41d4-a716-446655440000"
+    },
+    {
+      id: "670e8400-e29b-41d4-a716-446655440001",
+      firstName: "John",
+      lastName: "Smith",
+      email: "jsmith@logistics.com",
+      accountId: "550e8400-e29b-41d4-a716-446655440001"
+    }
+  ])
+  deal_insertMany(data: [
+    {
+      id: "780e8400-e29b-41d4-a716-446655440000",
+      title: "Cloud Migration",
+      stage: "Discovery",
+      value: 50000.0,
+      accountId: "550e8400-e29b-41d4-a716-446655440000"
+    }
+  ])
+}

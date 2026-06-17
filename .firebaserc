@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "xpnforce-crm",
+    "production": "xpnforce-crm",
+    "staging": "xpnforce-crm"
+  }
+}

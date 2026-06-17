@@ -1,0 +1,43 @@
+# /cloudflare/wrangler.toml
+# Cloudflare Workers deployment config
+# Install: npm install -g wrangler
+# Deploy:  cd cloudflare && wrangler deploy
+
+name       = "xpnforce-api"
+main       = "worker.js"
+compatibility_date = "2024-01-01"
+workers_dev = true
+
+# ── Production Route ─────────────────────────────────────────────
+# Uncomment and configure after connecting custom domain in CF dashboard
+# routes = [
+#   { pattern = "api.xpnforce.com/*", zone_name = "xpnforce.com" }
+# ]
+
+# ── KV Namespaces ────────────────────────────────────────────────
+# Create with: wrangler kv:namespace create RATE_LIMIT_KV
+# Then paste the id below
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id      = "YOUR_RATE_LIMIT_KV_ID"
+
+[[kv_namespaces]]
+binding = "ANALYTICS_KV"
+id      = "YOUR_ANALYTICS_KV_ID"
+
+# ── Secrets (set via CLI, never hardcode) ────────────────────────
+# wrangler secret put ANTHROPIC_API_KEY
+# → paste your sk-ant-... key when prompted
+
+# ── Environment configs ──────────────────────────────────────────
+[env.production]
+name = "xpnforce-api-production"
+workers_dev = false
+
+[env.staging]
+name = "xpnforce-api-staging"
+workers_dev = true
+
+# ── Observability ────────────────────────────────────────────────
+[observability.logs]
+enabled = true

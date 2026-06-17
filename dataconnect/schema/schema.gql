@@ -1,0 +1,42 @@
+type Account @table {
+  name: String!
+  industry: String!
+  website: String
+  address: String
+}
+
+type Contact @table {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String
+  jobTitle: String
+  account: Account
+}
+
+type Deal @table {
+  title: String!
+  stage: String!
+  value: Float!
+  estimatedCloseDate: Date
+  ownerId: UUID
+  account: Account
+}
+
+type Interaction @table {
+  type: String!
+  notes: String!
+  date: Timestamp!
+  duration: Int
+  contact: Contact
+  account: Account
+}
+
+type Task @table {
+  title: String!
+  dueDate: Timestamp!
+  status: String!
+  description: String
+  deal: Deal
+  contact: Contact
+}

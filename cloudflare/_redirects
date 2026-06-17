@@ -1,0 +1,5 @@
+# /cloudflare/_redirects
+# SPA fallback — all routes serve index.html
+# Place in project root if deploying to Cloudflare Pages
+
+/*    /index.html    200

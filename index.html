@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!-- /index.html -->
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="XPNFORCE — Unified AI-Powered CRM & Business Operating System" />
+  <meta name="theme-color" content="#0A0E1A" />
+  <title>XPNFORCE — Unified Business OS</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/logo.svg" />
+  <link rel="apple-touch-icon" href="/assets/icons/icon-192.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Sora', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            space:   { DEFAULT: '#0A0E1A', 800: '#111827', 700: '#1E2433', 600: '#252D3D', 500: '#2E3854' },
+            indigo:  { DEFAULT: '#4F46E5', light: '#6366F1', dark: '#3730A3', glow: 'rgba(79,70,229,0.25)' },
+            cyan:    { DEFAULT: '#06B6D4', light: '#22D3EE', dark: '#0891B2', glow: 'rgba(6,182,212,0.2)' },
+            slate:   { DEFAULT: '#94A3B8', light: '#CBD5E1', dark: '#64748B' },
+            success: '#10B981',
+            warning: '#F59E0B',
+            danger:  '#EF4444',
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body class="bg-space text-slate-light font-body antialiased overflow-hidden">
+
+  <!-- ============================================================
+       AUTH SCREEN
+  ============================================================ -->
+  <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-space">
+    <div class="auth-grid-bg absolute inset-0 opacity-20"></div>
+    <div class="relative z-10 w-full max-w-md px-6">
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo to-cyan flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <span class="font-display font-800 text-2xl text-white tracking-tight">XPNFORCE</span>
+        </div>
+        <h1 class="font-display text-3xl font-700 text-white mb-2">Business Operating System</h1>
+        <p class="text-slate text-sm">AI-powered enterprise platform</p>
+      </div>
+
+      <div class="bg-space-700 border border-space-500 rounded-2xl p-8">
+        <div id="login-form">
+          <div class="mb-5">
+            <label class="block text-xs font-600 text-slate-light uppercase tracking-widest mb-2">Email</label>
+            <input id="auth-email" type="email" placeholder="you@company.com" value="demo@xpnforce.com"
+              class="w-full bg-space-600 border border-space-500 rounded-xl px-4 py-3 text-white placeholder-slate focus:outline-none focus:border-indigo transition-colors" />
+          </div>
+          <div class="mb-6">
+            <label class="block text-xs font-600 text-slate-light uppercase tracking-widest mb-2">Password</label>
+            <input id="auth-password" type="password" placeholder="••••••••" value="demo1234"
+              class="w-full bg-space-600 border border-space-500 rounded-xl px-4 py-3 text-white placeholder-slate focus:outline-none focus:border-indigo transition-colors" />
+          </div>
+          <button id="btn-login" class="w-full bg-gradient-to-r from-indigo to-indigo-light hover:from-indigo-dark hover:to-indigo text-white font-600 py-3 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-indigo/30 mb-4">
+            Sign In
+          </button>
+          <button id="btn-demo" class="w-full bg-space-600 border border-space-500 text-slate-light hover:text-white hover:border-cyan font-500 py-3 rounded-xl transition-all duration-200">
+            Continue as Demo User
+          </button>
+        </div>
+        <div id="auth-error" class="hidden mt-4 text-danger text-sm text-center"></div>
+      </div>
+
+      <p class="text-center text-xs text-slate mt-6">Enterprise-grade security · SOC2 · GDPR · HIPAA</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN APP SHELL
+  ============================================================ -->
+  <div id="app-shell" class="hidden fixed inset-0 flex">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar flex flex-col bg-space-700 border-r border-space-500 w-64 flex-shrink-0 relative z-20">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3 px-5 py-5 border-b border-space-500">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo to-cyan flex items-center justify-center flex-shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+          <div class="font-display font-700 text-sm text-white tracking-tight">XPNFORCE</div>
+          <div class="text-xs text-slate font-mono">Business OS v1.0</div>
+        </div>
+        <button id="sidebar-collapse" class="ml-auto text-slate hover:text-white transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- AI Status Bar -->
+      <div class="mx-3 mt-3 mb-2 bg-space-600 border border-cyan/20 rounded-xl p-3">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-2 h-2 rounded-full bg-cyan animate-pulse"></div>
+          <span class="text-xs font-600 text-cyan">AI Engine Active</span>
+        </div>
+        <div class="neural-activity-bar">
+          <div class="neural-fill" id="neural-fill"></div>
+        </div>
+        <div class="flex justify-between mt-1">
+          <span class="text-xs text-slate font-mono" id="ai-tasks-count">0 tasks</span>
+          <span class="text-xs text-slate font-mono" id="ai-confidence">98.2%</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 overflow-y-auto py-2 px-2 scrollbar-thin">
+        <div id="nav-container"></div>
+      </nav>
+
+      <!-- User Profile -->
+      <div class="border-t border-space-500 p-3">
+        <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-space-600 cursor-pointer transition-colors" id="user-profile-btn">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo to-cyan flex items-center justify-center text-white text-sm font-600 flex-shrink-0" id="user-avatar">D</div>
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-600 text-white truncate" id="user-name">Demo User</div>
+            <div class="text-xs text-slate truncate" id="user-role">Super Admin</div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate flex-shrink-0"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+      <!-- TOP BAR -->
+      <header class="topbar flex items-center gap-4 px-6 py-3 bg-space-700 border-b border-space-500 flex-shrink-0">
+        <button id="mobile-menu" class="lg:hidden text-slate hover:text-white">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-sm" id="breadcrumb">
+          <span class="text-slate">XPNFORCE</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-space-500"><path d="M9 18l6-6-6-6"/></svg>
+          <span class="text-white font-500" id="breadcrumb-page">Dashboard</span>
+        </div>
+
+        <div class="flex-1"></div>
+
+        <!-- Search -->
+        <div class="relative hidden md:block">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Search anything..." id="global-search"
+            class="bg-space-600 border border-space-500 rounded-xl pl-9 pr-4 py-2 text-sm text-white placeholder-slate focus:outline-none focus:border-indigo w-64 transition-colors" />
+        </div>
+
+        <!-- Notifs -->
+        <button class="relative p-2 text-slate hover:text-white transition-colors" id="notif-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="absolute top-1 right-1 w-2 h-2 bg-cyan rounded-full" id="notif-badge"></span>
+        </button>
+
+        <!-- AI Assistant -->
+        <button id="ai-toggle" class="flex items-center gap-2 bg-indigo/20 border border-indigo/40 hover:bg-indigo/30 text-indigo-light px-3 py-2 rounded-xl text-sm font-500 transition-all">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          AI Assistant
+        </button>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="flex-1 overflow-y-auto bg-space" id="main-content">
+        <div id="page-container" class="p-6 max-w-[1600px] mx-auto"></div>
+      </main>
+    </div>
+
+    <!-- AI ASSISTANT PANEL -->
+    <div id="ai-panel" class="ai-panel hidden flex flex-col bg-space-700 border-l border-space-500 w-96 flex-shrink-0 z-10">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-space-500">
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-cyan rounded-full animate-pulse"></div>
+          <span class="font-display font-600 text-white text-sm">XPNFORCE AI</span>
+        </div>
+        <button id="ai-close" class="text-slate hover:text-white transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 space-y-3" id="ai-messages"></div>
+      <div class="p-4 border-t border-space-500">
+        <div class="flex gap-2">
+          <input type="text" id="ai-input" placeholder="Ask your AI assistant..." class="flex-1 bg-space-600 border border-space-500 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate focus:outline-none focus:border-cyan transition-colors" />
+          <button id="ai-send" class="bg-cyan hover:bg-cyan-dark text-space font-600 px-4 py-2.5 rounded-xl transition-colors text-sm">
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS PANEL -->
+    <div id="notif-panel" class="hidden fixed top-14 right-4 w-80 bg-space-700 border border-space-500 rounded-2xl shadow-2xl z-50 overflow-hidden">
+      <div class="px-4 py-3 border-b border-space-500 flex items-center justify-between">
+        <span class="font-600 text-white text-sm">Notifications</span>
+        <button class="text-xs text-indigo-light hover:text-white" id="mark-all-read">Mark all read</button>
+      </div>
+      <div id="notif-list" class="max-h-96 overflow-y-auto"></div>
+    </div>
+
+  </div><!-- /app-shell -->
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-[100] space-y-2 pointer-events-none"></div>
+
+  <!-- MODAL OVERLAY -->
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[80] flex items-center justify-center p-4">
+    <div id="modal-box" class="bg-space-700 border border-space-500 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"></div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js';
+
+    // ── Firebase Config ──────────────────────────────────────────
+    // Replace with your actual Firebase project config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBdl-2OLJMMUkdYiY8FeZQsdHjcr3bQ8VQ",
+      authDomain: "xpnforce-crm.firebaseapp.com",
+      databaseURL: "https://xpnforce-crm-default-rtdb.firebaseio.com/",
+      projectId: "xpnforce-crm",
+      storageBucket: "xpnforce-crm.firebasestorage.app",
+      messagingSenderId: "541162191759",
+      appId: "1:541162191759:web:f292dc51ed3acf48f269fa",
+      measurementId: ""
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const rtdb = getDatabase(app);
+
+    // Expose globally for modules
+    window.__firebase = { app, auth, db, rtdb, signInWithEmailAndPassword, onAuthStateChanged, signOut };
+  </script>
+
+  <!-- App Bootstrap -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
+<!-- Auto-appended by build: Service Worker registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[PWA] SW registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW registration failed:', err));
+  });
+}
+</script>
